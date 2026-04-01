@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(curl -s \"https://api.github.com/repos/mxschmitt/awesome-playwright/contributors\")",
+      "Bash(curl -s \"https://api.github.com/repos/mxschmitt/awesome-playwright/commits?per_page=50\")",
+      "Bash(python3 -c \"import sys,json; commits=json.load\\(sys.stdin\\); [print\\(f''''{c[\"\"sha\"\"][:7]} | {c[\"\"commit\"\"][\"\"author\"\"][\"\"name\"\"]} | {c[\"\"commit\"\"][\"\"author\"\"][\"\"email\"\"]}''''\\) for c in commits[:20]]\")",
+      "Bash(curl -s \"https://api.github.com/repos/mxschmitt/awesome-playwright/commits?per_page=100\")"
+    ]
+  }
+}
