@@ -216,6 +216,181 @@
 
 ---
 
+## 常用概念速查表
+
+### LLM 基础概念
+
+| 概念 | 说明 | 示例/值 |
+|------|------|--------|
+| **System Prompt** | 系统级指令，定义 Agent 角色和行为边界 | "You are Claude, an AI assistant..." |
+| **User Message** | 用户发送的消息 | "帮我 refactor 这个函数" |
+| **Assistant Message** | 模型生成的回复 | 包含文本和 tool_use |
+| **Tool Use** | 模型请求调用工具 | `{name: "Bash", input: {command: "ls"}}` |
+| **Tool Result** | 工具执行结果 | `{stdout: "file1.txt", exitCode: 0}` |
+| **Context Window** | 模型能处理的最大 token 数 | 200K tokens (Claude 3.5) |
+| **Streaming** | 流式输出，逐块返回响应 | `delta: {content: "..."}` |
+| **Temperature** | 输出随机性 (0-1) | 0.7 (默认) |
+| **Max Tokens** | 单次回复最大 token 数 | 8192 |
+
+### Agent 架构概念
+
+| 概念 | 说明 | 代码位置 |
+|------|------|---------|
+| **AppState** | 全局状态存储 | `src/state/AppState.ts` |
+| **ToolUseContext** | 工具执行上下文 | `src/Tool.ts:158` |
+| **PermissionMode** | 权限模式 (6 种) | `src/types/permissions.ts` |
+| **Message Chain** | 消息历史链表 | `src/types/message.ts` |
+| **Session Storage** | JSONL 持久化存储 | `src/utils/sessionStorage.ts` |
+| **Query Loop** | 主查询循环 | `src/query.ts` |
+| **REPL** | 交互式终端界面 | `src/replLauncher.tsx` |
+
+### 工具系统概念
+
+| 概念 | 说明 | 相关类型 |
+|------|------|---------|
+| **Tool Interface** | 工具接口定义 | `Tool<Input, Output, P>` |
+| **ToolDef** | 工具定义（用于 buildTool） | `ToolDef<Input, Output, P>` |
+| **buildTool()** | 工具构建器，填充默认方法 | `src/Tool.ts:757` |
+| **ToolUseContext** | 工具执行时的上下文 | `src/Tool.ts:158` |
+| **ToolProgressData** | 工具进度数据类型 | `src/types/tools.ts` |
+| **ToolResult** | 工具返回结果包装 | `src/Tool.ts:324` |
+| **isConcurrencySafe** | 是否可并发执行 | `Tool.isConcurrencySafe()` |
+| **isReadOnly** | 是否为只读操作 | `Tool.isReadOnly()` |
+| **toAutoClassifierInput** | 转为分类器输入 | `Tool.toAutoClassifierInput()` |
+
+### 权限系统概念
+
+| 概念 | 说明 | 值/类型 |
+|------|------|--------|
+| **PermissionMode** | 权限模式 | `default`, `auto`, `bypass`, `dontAsk`, `test`, `transcript` |
+| **ToolPermissionContext** | 权限检查上下文 | `src/Tool.ts:122` |
+| **PermissionResult** | 权限检查结果 | `{behavior: 'allow'/'deny'/'ask'}` |
+| **Always Allow Rule** | 始终允许规则 | `Bash(git *)` |
+| **Always Deny Rule** | 始终拒绝规则 | `Bash(rm -rf /)` |
+| **Auto Mode Classifier** | 自动模式分类器 | `src/utils/permissions/autoModeClassifier.ts` |
+| **Denial Tracking** | 拒绝计数跟踪 | `src/utils/permissions/denialTracking.ts` |
+
+### MCP 概念
+
+| 概念 | 说明 | 示例 |
+|------|------|------|
+| **MCP Server** | MCP 协议服务器 | `@modelcontextprotocol/server-github` |
+| **MCP Client** | Claude Code 中的 MCP 客户端 | `src/services/mcp/client.ts` |
+| **MCP Resource** | MCP 资源 URI | `github://repos/{owner}/{repo}` |
+| **MCP Tool** | MCP 暴露的工具 | `github-create_issue` |
+| **MCP Config** | MCP 配置文件 | `~/.claude/mcp.json` |
+| **Stdio Transport** | 标准输入输出传输 | `{command, args, env}` |
+| **SDK Transport** | 进程内 SDK 传输 | `InProcessTransport` |
+| **MCP OAuth** | MCP OAuth 认证流程 | `src/services/mcp/oauth.ts` |
+
+---
+
+## 术语中英对照表
+
+### LLM & API 术语
+
+| 中文 | 英文 | 缩写/别名 |
+|------|------|----------|
+| 大型语言模型 | Large Language Model | LLM |
+| 人工智能助手 | AI Assistant | Agent |
+| 提示词 | Prompt | - |
+| 系统提示词 | System Prompt | - |
+| 补全/回复 | Completion | - |
+| 令牌/词元 | Token | - |
+| 上下文窗口 | Context Window | Context |
+| 流式响应 | Streaming Response | Stream |
+| 工具调用 | Tool Use / Tool Call | Function Calling |
+| 消息格式 | Message Format | - |
+| 内容块 | Content Block | - |
+| 用户消息 | User Message | - |
+| 助手消息 | Assistant Message | - |
+| 工具结果 | Tool Result | - |
+
+### 架构术语
+
+| 中文 | 英文 | 缩写/别名 |
+|------|------|----------|
+| 状态管理 | State Management | AppState |
+| 全局状态 | Global State | AppStateStore |
+| 消息链 | Message Chain | MessageHistory |
+| 会话存储 | Session Storage | Transcript Storage |
+| 持久化 | Persistence | JSONL Storage |
+| 恢复机制 | Recovery Mechanism | Session Restore |
+| 交互式模式 | Interactive Mode | REPL |
+| 打印模式 | Print Mode | Non-interactive |
+| 后台任务 | Background Task | - |
+| 前台任务 | Foreground Task | - |
+| 中断处理 | Interrupt Handling | - |
+| 清理处理器 | Cleanup Handler | - |
+
+### 工具术语
+
+| 中文 | 英文 | 缩写/别名 |
+|------|------|----------|
+| 工具 | Tool | - |
+| 工具定义 | Tool Definition | ToolDef |
+| 工具池 | Tool Pool | Tools |
+| 工具注册 | Tool Registration | - |
+| 工具实现 | Tool Implementation | - |
+| 输入模式 | Input Schema | Zod Schema |
+| 输出模式 | Output Schema | - |
+| 只读工具 | Read-only Tool | - |
+| 并发安全 | Concurrency Safe | - |
+| 破坏性操作 | Destructive Operation | - |
+| 工具进度 | Tool Progress | - |
+| 工具结果截断 | Tool Result Truncation | - |
+| 工具摘要 | Tool Summary | - |
+
+### 权限术语
+
+| 中文 | 英文 | 缩写/别名 |
+|------|------|----------|
+| 权限模式 | Permission Mode | - |
+| 默认模式 | Default Mode | - |
+| 自动模式 | Auto Mode | - |
+|  bypass 模式 | Bypass Mode | - |
+| 不询问模式 | Don't Ask Mode | - |
+| 允许规则 | Allow Rule | Always Allow |
+| 拒绝规则 | Deny Rule | Always Deny |
+| 询问规则 | Ask Rule | - |
+| 权限检查 | Permission Check | - |
+| 分类器 | Classifier | Auto Mode Classifier |
+| 拒绝跟踪 | Denial Tracking | - |
+| 安全边界 | Security Boundary | - |
+
+### MCP 术语
+
+| 中文 | 英文 | 缩写/别名 |
+|------|------|----------|
+| 模型上下文协议 | Model Context Protocol | MCP |
+| MCP 服务器 | MCP Server | - |
+| MCP 客户端 | MCP Client | - |
+| MCP 资源 | MCP Resource | - |
+| MCP 工具 | MCP Tool | - |
+| MCP 提示词 | MCP Prompt | - |
+| 标准输入输出传输 | Stdio Transport | - |
+| SDK 传输 | SDK Transport | In-Process |
+| OAuth 认证 | OAuth Authentication | - |
+| 官方注册表 | Official Registry | - |
+| 资源模板 | Resource Template | - |
+
+### 界面术语
+
+| 中文 | 英文 | 缩写/别名 |
+|------|------|----------|
+| 终端用户界面 | Terminal User Interface | TUI |
+| 命令行界面 | Command Line Interface | CLI |
+| 交互式 | Interactive | REPL |
+| 非交互式 | Non-interactive | Print Mode |
+| 响应式 | Reactive | - |
+| 组件 | Component | React Component |
+| Hook | Hook | React Hook |
+| 渲染 | Render | - |
+| 进度指示器 | Progress Indicator | Spinner |
+| 通知 | Notification | - |
+
+---
+
 ## 术语表
 
 | 术语 | 英文 | 解释 |

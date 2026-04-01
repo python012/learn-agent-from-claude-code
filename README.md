@@ -1,5 +1,9 @@
 # 参考 Claude Code 源代码学习 Agent 开发
 
+[![GitHub Stars](https://img.shields.io/github/stars/python012/learn-agent-from-claude-code?style=flat-square&logo=github)](https://github.com/python012/learn-agent-from-claude-code/stargazers)
+[![License](https://img.shields.io/github/license/python012/learn-agent-from-claude-code?style=flat-square&label=license)](LICENSE)
+[![TypeScript](https://img.shields.io/github/languages/top/python012/learn-agent-from-claude-code?style=flat-square&logo=typescript)](https://github.com/python012/learn-agent-from-claude-code/search?l=typescript)
+
 本仓库包含一套完整的 **Agent 开发教程系列**，通过深入分析 Claude Code 源代码，引导有 Python/TypeScript 经验的工程师系统学习 Agent 开发。
 
 ## 学习指南（共 9 篇）
