@@ -7,7 +7,7 @@
 | 序号 | 文档 | 核心内容 |
 |------|------|----------|
 | 00 | [学习路线总览](docs/agent-learning-guide/00-学习路线总览.md) | 系列介绍、学习路径、时间估算 |
-| 01 | [LLM 基础与 Agent 概念](docs/agent-learning-guide/01-LLM 基础与Agent概念.md) | API 交互、消息格式、工具调用、流式响应 |
+| 01 | [LLM 基础与 Agent 概念](docs/agent-learning-guide/01-LLM基础与Agent概念.md) | API 交互、消息格式、工具调用、流式响应 |
 | 02 | [Agent 架构入门](docs/agent-learning-guide/02-Agent架构入门.md) | 整体架构、状态管理、命令系统、数据流 |
 | 03 | [工具系统详解](docs/agent-learning-guide/03-工具系统详解.md) | Tool 接口、工具实现、权限控制、自定义工具 |
 | 04 | [会话与状态管理](docs/agent-learning-guide/04-会话与状态管理.md) | 会话存储、消息链、持久化、恢复机制 |
