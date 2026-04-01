@@ -2,12 +2,12 @@
 
 本仓库包含一套完整的 **Agent 开发教程系列**，通过深入分析 Claude Code 源代码，引导有 Python/TypeScript 经验的工程师系统学习 Agent 开发。
 
-## 📚 学习指南（共 9 篇）
+## 学习指南（共 9 篇）
 
 | 序号 | 文档 | 核心内容 |
 |------|------|----------|
 | 00 | [学习路线总览](docs/agent-learning-guide/00-学习路线总览.md) | 系列介绍、学习路径、时间估算 |
-| 01 | [LLM 基础与 Agent 概念](docs/agent-learning-guide/01-LLM基础与Agent概念.md) | API 交互、消息格式、工具调用、流式响应 |
+| 01 | [LLM 基础与 Agent 概念](docs/agent-learning-guide/01-LLM 基础与Agent概念.md) | API 交互、消息格式、工具调用、流式响应 |
 | 02 | [Agent 架构入门](docs/agent-learning-guide/02-Agent架构入门.md) | 整体架构、状态管理、命令系统、数据流 |
 | 03 | [工具系统详解](docs/agent-learning-guide/03-工具系统详解.md) | Tool 接口、工具实现、权限控制、自定义工具 |
 | 04 | [会话与状态管理](docs/agent-learning-guide/04-会话与状态管理.md) | 会话存储、消息链、持久化、恢复机制 |
@@ -22,7 +22,7 @@
 2. **进阶路径**（有 LLM 经验）：第 02 → 03 → 05 → 06 → 07 → 08 篇
 3. **专题深入**：工具开发、权限系统、架构设计
 
-📖 **完整学习指南索引**：[docs/agent-learning-guide/README.md](docs/agent-learning-guide/README.md)
+完整学习指南索引：[docs/agent-learning-guide/README.md](docs/agent-learning-guide/README.md)
 
 ### 核心代码索引
 
@@ -43,12 +43,12 @@
 
 本仓库最初是作为 Claude Code 源代码的恢复版本而创建，现转型为 **Agent 开发学习参考仓库**。
 
-- **📚 学习指南**：位于 [`docs/agent-learning-guide/`](docs/agent-learning-guide/) 目录，是仓库的核心内容
+- **学习指南**：位于 [`docs/agent-learning-guide/`](docs/agent-learning-guide/) 目录，是仓库的核心内容
   - 完整索引：[docs/agent-learning-guide/README.md](docs/agent-learning-guide/README.md)
-- **💻 源码参考**：位于 `src/` 目录，保留原始 Claude Code 代码作为学习参考
-- **📝 原文档站**：位于 `docs-site/` 目录，保留原 MkDocs 文档
+- **源码参考**：位于 `src/` 目录，保留原始 Claude Code 代码作为学习参考
+- **原文档站**：位于 `docs-site/` 目录，保留原 MkDocs 文档
 
-> ⚠️ **注意**：`src/` 部分为只读参考，无 `package.json`，构建需要原始工具链（Bun、内部特性、私有依赖）。请将其视为 **架构参考** 而非可构建项目。
+> **注意**：`src/` 部分为只读参考，无 `package.json`，构建需要原始工具链（Bun、内部特性、私有依赖）。请将其视为 **架构参考** 而非可构建项目。
 
 ---
 
@@ -182,8 +182,6 @@ Full internals documentation is built with **MkDocs Material** from [`docs-site/
 - **Local preview:** `cd docs-site && python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && mkdocs serve`
 - **Publish:** pushing to `main` runs [`.github/workflows/pages.yml`](.github/workflows/pages.yml) and deploys to `gh-pages`.
 
-Canonical `site_url` and `repo_url` are set in [`docs-site/mkdocs.yml`](docs-site/mkdocs.yml) for this deployment. Forks should change those values to match their own GitHub user/org and Pages URL.
-
 **Contributing to docs:** edit Markdown under `docs-site/docs/`; keep the [official docs map](docs-site/docs/official-docs-map.md) in sync with [Anthropic's docs index](https://code.claude.com/docs/llms.txt) when adding major features.
 
 ### Next steps (forks / new clones)
@@ -197,6 +195,6 @@ Canonical `site_url` and `repo_url` are set in [`docs-site/mkdocs.yml`](docs-sit
 
 - **`src/`** — Application source (thousands of modules) as recovered from the bundle map.
 - **`docs-site/`** — MkDocs source for the GitHub Pages documentation site.
-- **`docs/`** — Short pointer plus [`directory-structure.md`](docs/directory-structure.md) (`src/` layout reference) + **Agent 开发学习指南**.
+- **`docs/`** — Short pointer plus [`directory-structure.md`](docs/directory-structure.md) (`src/` layout reference).
 - **`scripts/`** — Optional helpers (e.g. `gen-appendices.sh`).
 - There is **no `package.json` in this clone**; building would require the original toolchain (Bun, internal `bun:bundle` features, and private deps). Treat this tree as a **read-only architectural reference**.
