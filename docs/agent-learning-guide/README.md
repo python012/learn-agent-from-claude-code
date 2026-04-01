@@ -27,14 +27,14 @@
 ### 按主题查找
 
 #### LLM 与 API
-- [第 1 篇](./01-LLM 基础与 Agent 概念.md) — LLM API 基础
+- [第 1 篇](./01-LLM基础与Agent概念.md) — LLM API 基础
   - 消息格式（user/assistant/tool_result）
   - 工具调用（Tool Use）
   - 流式响应（Streaming）
   - Token 与计费
 
 #### 架构设计
-- [第 2 篇](./02-Agent 架构入门.md) — Agent 架构入门
+- [第 2 篇](./02-Agent架构入门.md) — Agent 架构入门
   - 整体架构图
   - 状态管理（AppState）
   - 命令系统
