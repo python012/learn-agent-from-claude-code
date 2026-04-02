@@ -10,15 +10,15 @@
 
 | 序号 | 文档 | 核心内容 |
 |------|------|----------|
-| 00 | [学习路线总览](docs/agent-learning-guide/00-学习路线总览.md) | 系列介绍、学习路径、时间估算 |
+| 00 | [学习路线总览](docs/agent-learning-guide/00-learning-roadmap.md) | 系列介绍、学习路径、时间估算 |
 | 01 | [LLM 基础与 Agent 概念](docs/agent-learning-guide/01-LLM基础与Agent概念.md) | API 交互、消息格式、工具调用、流式响应 |
-| 02 | [Agent 架构入门](docs/agent-learning-guide/02-Agent架构入门.md) | 整体架构、状态管理、命令系统、数据流 |
-| 03 | [工具系统详解](docs/agent-learning-guide/03-工具系统详解.md) | Tool 接口、工具实现、权限控制、自定义工具 |
-| 04 | [会话与状态管理](docs/agent-learning-guide/04-会话与状态管理.md) | 会话存储、消息链、持久化、恢复机制 |
-| 05 | [权限与安全控制](docs/agent-learning-guide/05-权限与安全控制.md) | 权限模式、规则系统、Auto Mode 分类器 |
-| 06 | [MCP 与外部集成](docs/agent-learning-guide/06-MCP与外部集成.md) | MCP 协议、外部工具集成、资源管理 |
-| 07 | [多 Agent 协作系统](docs/agent-learning-guide/07-多Agent协作系统.md) | Agent 生成、通信、协调器模式 |
-| 08 | [实战：构建自己的 Agent](docs/agent-learning-guide/08-实战构建自己的Agent.md) | 综合实践、从零实现完整 Agent 系统 |
+| 02 | [Agent 架构入门](docs/agent-learning-guide/02-agent-architecture-introduction.md) | 整体架构、状态管理、命令系统、数据流 |
+| 03 | [工具系统详解](docs/agent-learning-guide/03-tool-system-explained.md) | Tool 接口、工具实现、权限控制、自定义工具 |
+| 04 | [会话与状态管理](docs/agent-learning-guide/04-session-and-state-management.md) | 会话存储、消息链、持久化、恢复机制 |
+| 05 | [权限与安全控制](docs/agent-learning-guide/05-permission-and-security-control.md) | 权限模式、规则系统、Auto Mode 分类器 |
+| 06 | [MCP 与外部集成](docs/agent-learning-guide/06-mcp-and-external-integration.md) | MCP 协议、外部工具集成、资源管理 |
+| 07 | [多 Agent 协作系统](docs/agent-learning-guide/07-multi-agent-collaboration-system) | Agent 生成、通信、协调器模式 |
+| 08 | [实战：构建自己的 Agent](docs/agent-learning-guide/08-build-your-own-agent.md) | 综合实践、从零实现完整 Agent 系统 |
 
 ### 快速开始
 

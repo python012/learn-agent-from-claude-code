@@ -597,4 +597,4 @@ export async function readHeadAndTail(
 
 ---
 
-**下一步**：[第 5 篇 — 权限与安全控制](./05-权限与安全控制.md)
+**下一步**：[第 5 篇 — 权限与安全控制](./05-permission-and-security-control.md)

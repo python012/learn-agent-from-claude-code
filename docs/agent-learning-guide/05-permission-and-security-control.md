@@ -1063,4 +1063,4 @@ async function runPermissionRequestHooksForHeadlessAgent(
 
 ---
 
-**下一步**：[第 6 篇 — MCP 与外部集成](./06-MCP与外部集成.md)
+**下一步**：[第 6 篇 — MCP 与外部集成](./06-mcp-and-external-integration.md)

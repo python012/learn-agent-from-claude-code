@@ -43,7 +43,7 @@
 
 ---
 
-### 第 2 篇：[Agent 架构入门](./02-Agent架构入门.md)
+### 第 2 篇：[Agent 架构入门](./02-agent-architecture-introduction.md)
 
 **学习目标**：
 - 理解 Claude Code 的整体架构
@@ -57,7 +57,7 @@
 
 ---
 
-### 第 3 篇：[工具系统详解](./03-工具系统详解.md)
+### 第 3 篇：[工具系统详解](./03-tool-system-explained.md)
 
 **学习目标**：
 - 理解工具系统的核心设计模式
@@ -71,7 +71,7 @@
 
 ---
 
-### 第 4 篇：[会话与状态管理](./04-会话与状态管理.md)
+### 第 4 篇：[会话与状态管理](./04-session-and-state-management.md)
 
 **学习目标**：
 - 理解多轮对话的上下文管理
@@ -84,7 +84,7 @@
 
 ---
 
-### 第 5 篇：[权限与安全控制](./05-权限与安全控制.md)
+### 第 5 篇：[权限与安全控制](./05-permission-and-security-control.md)
 
 **学习目标**：
 - 理解 Agent 权限系统的设计原则
@@ -97,7 +97,7 @@
 
 ---
 
-### 第 6 篇：[MCP 与外部集成](./06-MCP与外部集成.md)
+### 第 6 篇：[MCP 与外部集成](./06-mcp-and-external-integration.md)
 
 **学习目标**：
 - 理解 Model Context Protocol (MCP) 的设计
@@ -110,7 +110,7 @@
 
 ---
 
-### 第 7 篇：[多 Agent 协作系统](./07-多Agent协作系统.md)
+### 第 7 篇：[多 Agent 协作系统](./07-multi-agent-collaboration-system)
 
 **学习目标**：
 - 理解多 Agent 协作的架构设计
@@ -123,7 +123,7 @@
 
 ---
 
-### 第 8 篇：[实战：构建你自己的 Agent](./08-实战构建自己的Agent.md)
+### 第 8 篇：[实战：构建你自己的 Agent](./08-build-your-own-agent.md)
 
 **学习目标**：
 - 综合运用前面所学知识

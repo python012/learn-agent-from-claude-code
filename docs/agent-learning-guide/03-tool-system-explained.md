@@ -1149,4 +1149,4 @@ function wrapAsMcpTool(mcpTool: MCPTool, serverName: string): Tool {
 
 ---
 
-**下一步**：[第 4 篇 — 会话与状态管理](./04-会话与状态管理.md)
+**下一步**：[第 4 篇 — 会话与状态管理](./04-session-and-state-management.md)

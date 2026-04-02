@@ -139,7 +139,7 @@ This is a **recovered source tree** of Anthropic's Claude Code CLI (reconstructe
 ## Learning Resources
 
 - **Tutorial series:** `docs/agent-learning-guide/` (9 comprehensive guides)
-- **Start here:** `docs/agent-learning-guide/00-学习路线总览.md` (learning path overview)
+- **Start here:** `docs/agent-learning-guide/00-learning-roadmap.md` (learning path overview)
 - **Code index:** See `docs/agent-learning-guide/README.md` for core code locations
 
 ---

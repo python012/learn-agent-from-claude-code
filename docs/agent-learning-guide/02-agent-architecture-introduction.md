@@ -818,4 +818,4 @@ export async function getMcpToolsCommandsAndResources(
 
 ---
 
-**下一步**：[第 3 篇 — 工具系统详解](./03-工具系统详解.md)
+**下一步**：[第 3 篇 — 工具系统详解](./03-tool-system-explained.md)
