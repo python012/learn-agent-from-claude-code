@@ -914,4 +914,4 @@ if __name__ == "__main__":
 
 ---
 
-**下一步**：[第 7 篇 — 多 Agent 协作系统](./07-multi-agent-collaboration-system)
+**下一步**：[第 7 篇 — 多 Agent 协作系统](./07-multi-agent-collaboration-system.md)

@@ -1982,5 +1982,3 @@ export { FileWriteTool } from './tools/FileWriteTool.js'
 - 阅读 Claude Code 完整源代码
 - 实践构建自己的 Agent 项目
 - 参与开源项目，学习社区最佳实践
-
-祝你在 Agent 开发的道路上不断进步！
