@@ -426,7 +426,7 @@
 
 如有问题或建议，欢迎通过以下方式反馈：
 
-- GitHub Issues: [项目地址](https://github.com/your-repo/claude-code)
+- GitHub Issues: [项目地址](https://github.com/python012/learn-agent-from-claude-code)
 - 文档讨论区
 
 ---
