@@ -143,7 +143,7 @@ npm test
 
 ## 学习资源
 
-- [第 08 篇：实战构建自己的 Agent](../../docs/agent-learning-guide/08-实战构建自己的 Agent.md)
+- [第 08 篇：实战构建自己的 Agent](../../docs/agent-learning-guide/08-build-your-own-agent.md)
 - [系列总览](../../docs/agent-learning-guide/README.md)
 
 ## License
