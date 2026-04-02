@@ -31,7 +31,7 @@
 
 本系列共 8 篇文档，按推荐学习顺序排列：
 
-### 第 1 篇：[LLM 基础与 Agent 概念](./01-LLM基础与Agent概念.md)
+### 第 1 篇：[LLM 基础与 Agent 概念](./01-llm-fundamentals-and-agent-concepts.md)
 
 **学习目标**：
 - 理解 LLM API 的基本工作原理
@@ -195,4 +195,4 @@
 
 ---
 
-**下一步**：开始 [第 1 篇 — LLM 基础与 Agent 概念](./01-LLM基础与Agent概念.md)
+**下一步**：开始 [第 1 篇 — LLM 基础与 Agent 概念](./01-llm-fundamentals-and-agent-concepts.md)
