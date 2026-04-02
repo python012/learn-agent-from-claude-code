@@ -711,70 +711,17 @@ export async function checkWritePermissionForTool(
 
 ### 完整执行流程
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ 1. 模型决定调用工具                                              │
-│    API 返回：content_block { type: 'tool_use', name: 'Bash', ... }│
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 2. 查找工具定义                                                  │
-│    const tool = tools.find(t => t.name === 'Bash')              │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 3. 验证输入 Schema                                               │
-│    const parsedInput = tool.inputSchema.parse(rawInput)         │
-│    - Zod 验证并转换类型                                          │
-│    - 失败则返回错误                                               │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 4. 检查权限                                                      │
-│    const permission = await hasPermissionsToUseTool(            │
-│      tool, parsedInput, context                                 │
-│    )                                                            │
-│    - 检查拒绝规则                                                │
-│    - 检查询问规则                                                │
-│    - Auto Mode 分类器                                            │
-│    - 用户确认（交互式）                                           │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 5. 执行工具                                                      │
-│    const result = await tool.call(                              │
-│      parsedInput,                                               │
-│      context,                                                   │
-│      canUseTool,                                                │
-│      parentMessage,                                             │
-│      onProgress                                                 │
-│    )                                                            │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 6. 处理结果                                                      │
-│    - 限制结果大小                                                 │
-│    - 生成 UI 渲染                                                  │
-│    - 追加到消息历史                                                │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 7. 发送工具结果给 API                                            │
-│    messages.push({                                              │
-│      role: 'user',                                              │
-│      content: [{                                                │
-│        type: 'tool_result',                                     │
-│        tool_use_id: toolUseId,                                  │
-│        content: resultData                                      │
-│      }]                                                         │
-│    })                                                           │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    A["1. 模型决定调用工具<br/>API 返回：content_block { type: 'tool_use', name: 'Bash', ... }"]
+    B["2. 查找工具定义<br/>const tool = tools.find(t => t.name === 'Bash')"]
+    C["3. 验证输入 Schema<br/>const parsedInput = tool.inputSchema.parse(rawInput)<br/>- Zod 验证并转换类型<br/>- 失败则返回错误"]
+    D["4. 检查权限<br/>const permission = await hasPermissionsToUseTool(<br/>  tool, parsedInput, context)<br/>- 检查拒绝规则<br/>- 检查询问规则<br/>- Auto Mode 分类器<br/>- 用户确认（交互式）"]
+    E["5. 执行工具<br/>const result = await tool.call(<br/>  parsedInput, context, canUseTool,<br/>  parentMessage, onProgress)"]
+    F["6. 处理结果<br/>- 限制结果大小<br/>- 生成 UI 渲染<br/>- 追加到消息历史"]
+    G["7. 发送工具结果给 API<br/>messages.push({<br/>  role: 'user',<br/>  content: [{<br/>    type: 'tool_result',<br/>    tool_use_id: toolUseId,<br/>    content: resultData<br/>  }]<br/>})"]
+
+    A --> B --> C --> D --> E --> F --> G
 ```
 
 ### 代码实现

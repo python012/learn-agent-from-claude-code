@@ -13,42 +13,41 @@
 
 ### 架构图
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         CLI 入口 (main.tsx)                      │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │  Commander   │  │  初始化流程  │  │   状态提供者            │  │
-│  │  命令解析    │  │  Telemetry  │  │   AppStateProvider     │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                       REPL / 交互界面                            │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │  Ink (React)│  │  消息列表    │  │   输入处理              │  │
-│  │  终端 UI     │  │  Messages   │  │   PromptInput          │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                        核心服务层                                │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │  API 客户端   │  │  MCP 服务    │  │   工具系统             │  │
-│  │  claude.ts  │  │  mcp/       │  │   tools.ts             │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │  状态管理    │  │  权限系统    │  │   会话管理             │  │
-│  │  AppState   │  │  permissions│  │   sessionStorage       │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                         工具实现层                               │
-│  Bash  │  FileRead  │  FileWrite  │  Grep  │  Glob  │  MCP ... │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph CLI["CLI 入口 (main.tsx)"]
+        Commander["Commander<br/>命令解析"]
+        Init["初始化流程<br/>Telemetry"]
+        StateProvider["状态提供者<br/>AppStateProvider"]
+    end
+
+    subgraph REPL["REPL / 交互界面"]
+        Ink["Ink (React)<br/>终端 UI"]
+        Messages["消息列表<br/>Messages"]
+        Input["输入处理<br/>PromptInput"]
+    end
+
+    subgraph Core["核心服务层"]
+        API["API 客户端<br/>claude.ts"]
+        MCP["MCP 服务<br/>mcp/"]
+        Tools["工具系统<br/>tools.ts"]
+        AppState["状态管理<br/>AppState"]
+        Permissions["权限系统<br/>permissions"]
+        Session["会话管理<br/>sessionStorage"]
+    end
+
+    subgraph ToolImpl["工具实现层"]
+        Bash["Bash"]
+        FileRead["FileRead"]
+        FileWrite["FileWrite"]
+        Grep["Grep"]
+        Glob["Glob"]
+        MCPTools["MCP ..."]
+    end
+
+    CLI --> REPL
+    REPL --> Core
+    Core --> ToolImpl
 ```
 
 ### 核心模块职责
@@ -351,33 +350,16 @@ export function getCommands(): Command[] {
 
 ### 命令执行流程
 
-```
-用户输入：/commit -m "fix bug"
-         │
-         ▼
-┌─────────────────┐
-│  解析命令前缀    │  → 识别 "/" 前缀
-└─────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│  查找命令定义    │  → 匹配 "commit"
-└─────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│  解析参数        │  → 提取 "-m" 和 "fix bug"
-└─────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│  执行命令动作    │  → 调用 commit 的 action 函数
-└─────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│  显示结果        │  → 更新 UI 显示提交结果
-└─────────────────┘
+```mermaid
+flowchart TB
+    A["用户输入：/commit -m 'fix bug'"]
+    B["解析命令前缀<br/>→ 识别 '/' 前缀"]
+    C["查找命令定义<br/>→ 匹配 'commit'"]
+    D["解析参数<br/>→ 提取 '-m' 和 'fix bug'"]
+    E["执行命令动作<br/>→ 调用 commit 的 action 函数"]
+    F["显示结果<br/>→ 更新 UI 显示提交结果"]
+
+    A --> B --> C --> D --> E --> F
 ```
 
 ---
@@ -459,106 +441,60 @@ export function toolToAPISchema(tool: Tool): BetaToolUnion {
 
 ### 完整请求流程
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ 1. 用户输入                                                      │
-│    "帮我创建一个新文件，内容是 Hello World"                        │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 2. 消息标准化                                                    │
-│    normalizeMessagesForAPI(messages)                            │
-│    - 转换为 API 格式                                              │
-│    - 添加系统提示                                                │
-│    - 注入工具定义                                                │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 3. API 调用                                                      │
-│    client.messages.stream({                                     │
-│      model, messages, tools, system                             │
-│    })                                                           │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 4. 流式响应处理                                                  │
-│    for await (const event of stream) {                          │
-│      - content_block_start                                      │
-│      - content_block_delta (文本/工具输入)                        │
-│      - content_block_stop                                       │
-│    }                                                            │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 5. 工具调用检测和执行                                            │
-│    if (event.content_block.type === 'tool_use') {               │
-│      const tool = tools.find(t => t.name === block.name)        │
-│      const result = await tool.call(input, context)             │
-│    }                                                            │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 6. 发送工具结果                                                  │
-│    messages.push({                                              │
-│      role: 'user',                                              │
-│      content: [{ type: 'tool_result', tool_use_id, content }]   │
-│    })                                                           │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 7. 继续 API 调用获取后续回复                                       │
-│    （回到步骤 3）                                                 │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ 8. 更新 UI 显示结果                                              │
-│    setAppState(prev => ({                                       │
-│      ...prev,                                                   │
-│      messages: [...prev.messages, newMessages]                  │
-│    }))                                                          │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    A["1. 用户输入<br/>'帮我创建一个新文件，内容是 Hello World'"]
+    B["2. 消息标准化<br/>normalizeMessagesForAPI(messages)<br/>- 转换为 API 格式<br/>- 添加系统提示<br/>- 注入工具定义"]
+    C["3. API 调用<br/>client.messages.stream({<br/>  model, messages, tools, system})"]
+    D["4. 流式响应处理<br/>for await (const event of stream) {<br/>  - content_block_start<br/>  - content_block_delta (文本/工具输入)<br/>  - content_block_stop}"]
+    E["5. 工具调用检测和执行<br/>if (event.content_block.type === 'tool_use') {<br/>  const tool = tools.find(...)<br/>  const result = await tool.call(...)}"]
+    F["6. 发送工具结果<br/>messages.push({<br/>  role: 'user',<br/>  content: [{ type: 'tool_result', ... }]})"]
+    G["7. 继续 API 调用获取后续回复<br/>（回到步骤 3）"]
+    H["8. 更新 UI 显示结果<br/>setAppState(prev => ({...}))"]
+
+    A --> B --> C --> D --> E --> F --> G --> H
 ```
 
 ### 关键函数调用链
 
-```
-main.tsx:main()
-  │
-  ├─> launchRepl()
-  │     │
-  │     ├─> initializeToolPermissionContext()
-  │     ├─> getTools(permissionContext)
-  │     │     │
-  │     │     └─> getAllBaseTools()
-  │     │     └─> filterToolsByDenyRules()
-  │     │
-  │     └─> runQuery()  [src/services/api/claude.ts]
-  │           │
-  │           ├─> normalizeMessagesForAPI()
-  │           ├─> toolToAPISchema()
-  │           ├─> client.messages.stream()
-  │           │
-  │           └─> for await (event of stream)
-  │                 │
-  │                 ├─> handleToolUse(event)
-  │                 │     │
-  │                 │     └─> tool.call(input, context)
-  │                 │           │
-  │                 │           └─> BashTool.call() / FileWriteTool.call() / ...
-  │                 │
-  │                 └─> appendMessage(event)
-  │
-  └─> render(<App />)
-        │
-        └─> <MessageList />
-        └─> <PromptInput />
+```mermaid
+flowchart TB
+    Main["main.tsx:main()"]
+    Launch["launchRepl()"]
+    InitPerm["initializeToolPermissionContext()"]
+    GetTools["getTools(permissionContext)"]
+    GetAll["getAllBaseTools()"]
+    Filter["filterToolsByDenyRules()"]
+    RunQuery["runQuery() [src/services/api/claude.ts]"]
+    Normalize["normalizeMessagesForAPI()"]
+    ToAPI["toolToAPISchema()"]
+    Stream["client.messages.stream()"]
+    ForStream["for await (event of stream)"]
+    HandleTool["handleToolUse(event)"]
+    ToolCall["tool.call(input, context)"]
+    ToolImpl["BashTool.call() / FileWriteTool.call() / ..."]
+    AppendMsg["appendMessage(event)"]
+    Render["render(&lt;App /&gt;)"]
+    MessageList["&lt;MessageList /&gt;"]
+    PromptInput["&lt;PromptInput /&gt;"]
+
+    Main --> Launch
+    Launch --> InitPerm
+    Launch --> GetTools
+    GetTools --> GetAll
+    GetTools --> Filter
+    Launch --> RunQuery
+    RunQuery --> Normalize
+    RunQuery --> ToAPI
+    RunQuery --> Stream
+    RunQuery --> ForStream
+    ForStream --> HandleTool
+    HandleTool --> ToolCall
+    ToolCall --> ToolImpl
+    ForStream --> AppendMsg
+    Main --> Render
+    Render --> MessageList
+    Render --> PromptInput
 ```
 
 ---
@@ -767,18 +703,16 @@ export async function getMcpToolsCommandsAndResources(
 
 ### 5. 模块化设计
 
-```
-┌─────────────────────────────────────────┐
-│              main.tsx                   │
-│  (编排层：初始化、命令解析、启动)          │
-└─────────────────────────────────────────┘
-              │
-    ┌─────────┼─────────┐
-    ▼         ▼         ▼
-┌────────┐ ┌────────┐ ┌────────┐
-│ State  │ │  API   │ │ Tools  │
-│ (状态) │ │ (服务) │ │ (工具) │
-└────────┘ └────────┘ └────────┘
+```mermaid
+flowchart TB
+    Main["main.tsx<br/>(编排层：初始化、命令解析、启动)"]
+    State["State<br/>(状态)"]
+    API["API<br/>(服务)"]
+    Tools["Tools<br/>(工具)"]
+
+    Main --> State
+    Main --> API
+    Main --> Tools
 ```
 
 ---

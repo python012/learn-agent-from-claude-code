@@ -540,12 +540,16 @@ null ← user(1) ← assistant(2) ← user(3) ← assistant(4)
 
 ### 3. 状态与持久化分离
 
-```
-AppState (内存)  ←→  sessionStorage (磁盘)
-     │                      │
-     │ React 渲染            │ JSONL 文件
-     │                      │
-     └────── 同步 ──────────┘
+```mermaid
+flowchart LR
+    subgraph Memory["AppState (内存)"]
+        React["React 渲染"]
+    end
+    subgraph Disk["sessionStorage (磁盘)"]
+        JSONL["JSONL 文件"]
+    end
+
+    Memory <--> Disk
 ```
 
 ### 4. 惰性加载策略

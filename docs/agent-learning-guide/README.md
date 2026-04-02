@@ -100,43 +100,49 @@
 
 ### Agent 核心概念
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Agent = LLM + Tools + State + Permissions                   │
-│                                                             │
-│ - LLM: 决策核心（理解任务、规划步骤、调用工具）                 │
-│ - Tools: 能力扩展（Bash、文件操作、网络搜索等）                │
-│ - State: 上下文记忆（消息历史、会话状态）                      │
-│ - Permissions: 安全边界（什么能做、什么需要用户确认）           │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    Agent["Agent = LLM + Tools + State + Permissions"]
+
+    LLM["LLM: 决策核心<br/>（理解任务、规划步骤、调用工具）"]
+    Tools["Tools: 能力扩展<br/>（Bash、文件操作、网络搜索等）"]
+    State["State: 上下文记忆<br/>（消息历史、会话状态）"]
+    Permissions["Permissions: 安全边界<br/>（什么能做、什么需要用户确认）"]
+
+    Agent --- LLM
+    Agent --- Tools
+    Agent --- State
+    Agent --- Permissions
 ```
 
 ### 工具调用流程
 
-```
-1. 模型决定调用工具 → 返回 tool_use 内容块
-2. 查找工具定义 → tools.find(t => t.name === toolName)
-3. 验证输入 Schema → tool.inputSchema.parse(input)
-4. 检查权限 → hasPermissionsToUseTool()
-5. 执行工具 → tool.call(input, context)
-6. 处理结果 → 限制大小、生成 UI、追加消息
-7. 发送结果给 API → tool_result 消息
-8. 模型继续回复
+```mermaid
+flowchart LR
+    A[1. 模型决定调用工具] --> B[2. 查找工具定义]
+    B --> C[3. 验证输入 Schema]
+    C --> D[4. 检查权限]
+    D --> E[5. 执行工具]
+    E --> F[6. 处理结果]
+    F --> G[7. 发送结果给 API]
+    G --> H[8. 模型继续回复]
 ```
 
 ### 权限检查流程
 
-```
-1. 检查拒绝规则 → getDenyRuleForTool()
-2. 检查询问规则 → getAskRuleForTool()
-3. 工具特定检查 → tool.checkPermissions()
-4. 安全检查 → 敏感路径保护
-5. 模式转换
-   - bypassPermissions → 允许
-   - dontAsk → 拒绝
-   - auto → 分类器决定
-6. 检查允许规则 → toolAlwaysAllowedRule()
-7. 默认 → 询问用户
+```mermaid
+flowchart TB
+    A[1. 检查拒绝规则] --> B[2. 检查询问规则]
+    B --> C[3. 工具特定检查]
+    C --> D[4. 安全检查]
+    D --> E{5. 模式转换}
+    E -->|bypassPermissions| F[允许]
+    E -->|dontAsk| G[拒绝]
+    E -->|auto| H[分类器决定]
+    H --> I[6. 检查允许规则]
+    I --> J{7. 默认}
+    J -->|有允许规则| F
+    J -->|无允许规则| K[询问用户]
 ```
 
 ---
@@ -145,16 +151,24 @@
 
 ### 初学者路径（22-32 小时）
 
-```
-第 1 篇 (4-6h) → 第 2 篇 (4-6h) → 第 3 篇 (6-8h) →
-第 4 篇 (4-6h) → 第 5 篇 (4-6h) → 实战篇 (4-6h)
+```mermaid
+flowchart LR
+    A[第 1 篇<br/>4-6h] --> B[第 2 篇<br/>4-6h]
+    B --> C[第 3 篇<br/>6-8h]
+    C --> D[第 4 篇<br/>4-6h]
+    D --> E[第 5 篇<br/>4-6h]
+    E --> F[实战篇<br/>4-6h]
 ```
 
 ### 进阶路径（针对有 LLM 经验者）
 
-```
-第 2 篇 (2-3h) → 第 3 篇 (4-5h) → 第 5 篇 (4-5h) →
-第 6 篇 (MCP 集成) → 第 7 篇 (多 Agent 协作) → 第 8 篇 (实战)
+```mermaid
+flowchart LR
+    A[第 2 篇<br/>2-3h] --> B[第 3 篇<br/>4-5h]
+    B --> C[第 5 篇<br/>4-5h]
+    C --> D[第 6 篇<br/>MCP 集成]
+    D --> E[第 7 篇<br/>多 Agent 协作]
+    E --> F[第 8 篇<br/>实战]
 ```
 
 ### 专题深入
