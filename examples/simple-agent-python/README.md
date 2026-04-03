@@ -1,6 +1,6 @@
 # SimpleAgent Python
 
-基于 TypeScript 版本构建的 Python 版 Agent 系统示例。
+基于第 08 篇教程使用 Python 实现的轻量级 Agent 系统示例。
 
 ## 快速开始
 

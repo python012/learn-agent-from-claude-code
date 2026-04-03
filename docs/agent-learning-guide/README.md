@@ -96,6 +96,24 @@
 
 ---
 
+## Python 版本代码索引
+
+第 8 篇实战提供 Python 版本的 SimpleAgent 实现，位于 `examples/simple-agent-python/` 目录：
+
+| 模块 | 文件路径 | 用途 |
+|------|----------|------|
+| Agent 核心 | `examples/simple-agent-python/src/agent/agent.py` | Agent 核心实现 |
+| LLM 客户端 | `examples/simple-agent-python/src/agent/llm_client.py` | OpenAI 客户端封装 |
+| 工具基类 | `examples/simple-agent-python/src/tools/base.py` | Tool 接口定义 |
+| Bash 工具 | `examples/simple-agent-python/src/tools/bash_tool.py` | Bash 工具实现 |
+| 文件读取 | `examples/simple-agent-python/src/tools/file_read_tool.py` | 文件读取工具 |
+| 文件写入 | `examples/simple-agent-python/src/tools/file_write_tool.py` | 文件写入工具 |
+| 状态管理 | `examples/simple-agent-python/src/state/store.py` | 状态存储 |
+| 会话持久化 | `examples/simple-agent-python/src/state/session.py` | 会话管理 |
+| 权限检查 | `examples/simple-agent-python/src/permissions/checker.py` | 权限规则系统 |
+
+> **说明**: Python 版本与 TypeScript 版本功能对等，可任选其一学习，或对照阅读理解不同语言的实现差异。
+
 ## 关键概念速查
 
 ### Agent 核心概念

@@ -18,7 +18,7 @@
 | 05 | [权限与安全控制](docs/agent-learning-guide/05-permission-and-security-control.md) | 权限模式、规则系统、Auto Mode 分类器 |
 | 06 | [MCP 与外部集成](docs/agent-learning-guide/06-mcp-and-external-integration.md) | MCP 协议、外部工具集成、资源管理 |
 | 07 | [多 Agent 协作系统](docs/agent-learning-guide/07-multi-agent-collaboration-system) | Agent 生成、通信、协调器模式 |
-| 08 | [实战：构建自己的 Agent](docs/agent-learning-guide/08-build-your-own-agent.md) | 综合实践、从零实现完整 Agent 系统 |
+| 08 | [实战：构建自己的 Agent](docs/agent-learning-guide/08-build-your-own-agent.md) | 综合实践、从零实现完整 Agent 系统（TypeScript + Python 双版本） |
 
 ### 快速开始
 

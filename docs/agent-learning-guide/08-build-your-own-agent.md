@@ -39,10 +39,16 @@ flowchart TB
 
 | 组件 | 技术选型 | 理由 |
 |------|----------|------|
-| 运行时 | Node.js 18+ / Python 3.10+ | 生态成熟，示例使用 TypeScript |
+| 运行时 | Node.js 18+ / Python 3.10+ | 生态成熟，提供 TypeScript 和 Python 两个版本 |
 | LLM | OpenAI API | 行业标准，文档完善 |
-| 语言 | TypeScript | 类型安全，与前文代码风格一致 |
+| 语言 | TypeScript / Python | TypeScript 版本与 Claude Code 代码风格一致；Python 版本更易于快速上手 |
 | 构建工具 | tsup / tsc | 快速构建，配置简单 |
+
+> **说明**: 本教程提供两个版本的 SimpleAgent 实现：
+> - **TypeScript 版本**: 位于 `examples/simple-agent/`，适合熟悉 Node.js 生态的开发者
+> - **Python 版本**: 位于 `examples/simple-agent-python/`，适合熟悉 Python 生态的开发者
+> 
+> 两个版本功能对等，可任选其一学习，或对照阅读理解不同语言的实现差异。
 
 ### 8.1.3 项目结构
 
@@ -1829,7 +1835,9 @@ main().catch(console.error)
 
 ## 8.10 完整项目代码
 
-### 8.10.1 package.json
+### 8.10.1 TypeScript 版本
+
+**package.json**
 
 ```json
 {
@@ -1858,7 +1866,65 @@ main().catch(console.error)
 }
 ```
 
-### 8.10.2 tsconfig.json
+### 8.10.2 Python 版本
+
+Python 版本的项目结构请参考 `examples/simple-agent-python/` 目录：
+
+```
+examples/simple-agent-python/
+├── src/
+│   ├── agent/
+│   │   ├── __init__.py
+│   │   ├── agent.py          # Agent 核心类
+│   │   ├── llm_client.py     # OpenAI 客户端封装
+│   │   └── types.py          # 类型定义
+│   ├── tools/
+│   │   ├── __init__.py
+│   │   ├── base.py           # Tool 基类
+│   │   ├── bash_tool.py      # Bash 工具
+│   │   ├── file_read_tool.py # 文件读取工具
+│   │   └── file_write_tool.py# 文件写入工具
+│   ├── state/
+│   │   ├── __init__.py
+│   │   ├── store.py          # 状态管理
+│   │   └── session.py        # 会话持久化
+│   └── permissions/
+│       ├── __init__.py
+│       ├── checker.py        # 权限检查
+│       └── types.py          # 权限类型
+├── examples/
+│   ├── basic_usage.py        # 基本用法
+│   ├── repl.py               # 交互式 REPL
+│   └── custom_tool.py        # 自定义工具示例
+├── tests/
+│   └── test_agent.py         # 单元测试
+├── requirements.txt
+└── README.md
+```
+
+**快速开始**：
+
+```bash
+cd examples/simple-agent-python
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 运行测试（无需 API Key）
+python examples/test_no_api_key.py
+
+# 使用真实 API
+export OPENAI_API_KEY=your-api-key-here
+python examples/basic_usage.py
+```
+
+详细文档请查看 [examples/simple-agent-python/README.md](../../examples/simple-agent-python/README.md)。
+
+---
+
+### 8.10.3 TypeScript 版本配置文件
+
+**tsconfig.json**
 
 ```json
 {
@@ -1924,6 +1990,10 @@ export { BashTool } from './tools/BashTool.js'
 export { FileReadTool } from './tools/FileReadTool.js'
 export { FileWriteTool } from './tools/FileWriteTool.js'
 ```
+
+### 8.10.4 TypeScript 版本入口文件
+
+**src/index.ts**
 
 ---
 

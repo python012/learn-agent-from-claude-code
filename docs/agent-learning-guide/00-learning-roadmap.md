@@ -132,6 +132,10 @@
 
 **关键代码参考**：
 - 综合前面所有文档的代码示例
+- `examples/simple-agent/` — TypeScript 版本实现
+- `examples/simple-agent-python/` — Python 版本实现
+
+> **说明**: 第 8 篇实战提供两个版本的 SimpleAgent 实现，功能对等，可任选其一学习。
 
 ---
 
