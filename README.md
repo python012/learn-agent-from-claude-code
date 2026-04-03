@@ -30,6 +30,8 @@
 
 ### 核心代码索引
 
+#### TypeScript 版本（参考 Claude Code）
+
 | 模块 | 源码路径 | 用途 |
 |------|----------|------|
 | Tool 接口 | `src/Tool.ts` | 工具接口定义 |
@@ -41,6 +43,20 @@
 | Agent 工具 | `src/tools/AgentTool/AgentTool.tsx` | 多 Agent 协作 |
 | MCP 客户端 | `src/services/mcp/client.ts` | 外部工具集成 |
 
+#### Python 版本（第 08 篇实战示例）
+
+| 模块 | 源码路径 | 用途 |
+|------|----------|------|
+| Agent 核心 | `examples/simple-agent-python/src/agent/agent.py` | Agent 核心实现 |
+| LLM 客户端 | `examples/simple-agent-python/src/agent/llm_client.py` | OpenAI 客户端封装 |
+| 工具基类 | `examples/simple-agent-python/src/tools/base.py` | Tool 接口定义 |
+| 状态管理 | `examples/simple-agent-python/src/state/store.py` | 状态存储 |
+| 权限检查 | `examples/simple-agent-python/src/permissions/checker.py` | 权限规则系统 |
+
+> **说明**: 第 8 篇实战提供两个版本的 SimpleAgent 实现：
+> - **TypeScript 版本**: `examples/simple-agent/` — 适合熟悉 Node.js 生态的开发者
+> - **Python 版本**: `examples/simple-agent-python/` — 适合熟悉 Python 生态的开发者
+
 ---
 
 ## 关于本仓库
@@ -49,6 +65,9 @@
 
 - **学习指南**：位于 [`docs/agent-learning-guide/`](docs/agent-learning-guide/) 目录，是仓库的核心内容
   - 完整索引：[docs/agent-learning-guide/README.md](docs/agent-learning-guide/README.md)
+- **示例代码**：位于 [`examples/`](examples/) 目录
+  - `examples/simple-agent/` — TypeScript 版本 SimpleAgent 实现
+  - `examples/simple-agent-python/` — Python 版本 SimpleAgent 实现
 - **源码参考**：位于 `src/` 目录，保留原始 Claude Code 代码作为学习参考
 - **原文档站**：位于 `docs-site/` 目录，保留原 MkDocs 文档
 
@@ -198,6 +217,9 @@ Full internals documentation is built with **MkDocs Material** from [`docs-site/
 ## Repository layout
 
 - **`src/`** — Application source (thousands of modules) as recovered from the bundle map.
+- **`examples/`** — SimpleAgent sample implementations
+  - `simple-agent/` — TypeScript version
+  - `simple-agent-python/` — Python version
 - **`docs-site/`** — MkDocs source for the GitHub Pages documentation site.
 - **`docs/`** — Short pointer plus [`directory-structure.md`](docs/directory-structure.md) (`src/` layout reference).
 - **`scripts/`** — Optional helpers (e.g. `gen-appendices.sh`).
