@@ -3,6 +3,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/python012/learn-agent-from-claude-code?style=flat-square&logo=github)](https://github.com/python012/learn-agent-from-claude-code/stargazers)
 [![License](https://img.shields.io/github/license/python012/learn-agent-from-claude-code?style=flat-square&label=license)](LICENSE)
 [![TypeScript](https://img.shields.io/github/languages/top/python012/learn-agent-from-claude-code?style=flat-square&logo=typescript)](https://github.com/python012/learn-agent-from-claude-code/search?l=typescript)
+[![Python](https://img.shields.io/badge/language-Python-blue?style=flat-square&logo=python)](https://github.com/python012/learn-agent-from-claude-code/tree/main/examples/simple-agent-python)
 
 本仓库包含一套完整的 **Agent 开发教程系列**，通过深入分析和解读 Claude Code 源码，引导有一定经验的软件工程师学习 AI Agent 开发。
 
