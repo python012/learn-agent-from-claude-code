@@ -38,6 +38,12 @@ python examples/repl.py
 
 # 自定义工具示例
 python examples/custom_tool.py
+
+# 多 Agent 协作示例
+python examples/multi_agent_collaboration.py
+
+# MCP 集成示例
+python examples/mcp_integration.py
 ```
 
 ## 项目结构
@@ -149,8 +155,8 @@ pytest tests/
 
 ## 学习资源
 
-- [第 08 篇：实战构建自己的 Agent](../../docs/agent-learning-guide/08-build-your-own-agent.md)
-- [系列总览](../../docs/agent-learning-guide/README.md)
+- [第 08 篇：实战构建自己的 Agent](../../docs-site/agent-learning-guide/08-build-your-own-agent.md)
+- [系列总览](../../docs-site/agent-learning-guide/README.md)
 
 ## License
 

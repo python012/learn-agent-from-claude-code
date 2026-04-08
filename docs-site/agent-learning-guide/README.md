@@ -17,7 +17,7 @@
 | 04 | [会话与状态管理](./04-session-and-state-management.md) | [x] 完成 | 会话存储、消息链、持久化、恢复机制 |
 | 05 | [权限与安全控制](./05-permission-and-security-control.md) | [x] 完成 | 权限模式、规则系统、Auto Mode 分类器 |
 | 06 | [MCP 与外部集成](./06-mcp-and-external-integration.md) | [x] 完成 | MCP 协议、外部工具集成、资源管理 |
-| 07 | [多 Agent 协作系统](./07-multi-agent-collaboration-system) | [x] 完成 | Agent 生成、通信、协调器模式 |
+| 07 | [多 Agent 协作系统](./07-multi-agent-collaboration-system.md) | [x] 完成 | Agent 生成、通信、协调器模式 |
 | 08 | [实战：构建你自己的 Agent](./08-build-your-own-agent.md) | [x] 完成 | 综合实践、从零实现完整 Agent 系统 |
 
 ---

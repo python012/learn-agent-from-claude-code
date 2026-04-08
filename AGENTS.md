@@ -132,15 +132,15 @@ This is a **recovered source tree** of Anthropic's Claude Code CLI (reconstructe
 | `src/utils/` | Utilities (permissions, settings, model, session) |
 | `src/components/` | React + Ink UI components |
 | `src/types/` | TypeScript type definitions |
-| `docs/agent-learning-guide/` | Agent development tutorials (9 parts) |
+| `docs-site/agent-learning-guide/` | Agent development tutorials (9 parts) |
 
 ---
 
 ## Learning Resources
 
-- **Tutorial series:** `docs/agent-learning-guide/` (9 comprehensive guides)
-- **Start here:** `docs/agent-learning-guide/00-learning-roadmap.md` (learning path overview)
-- **Code index:** See `docs/agent-learning-guide/README.md` for core code locations
+- **Tutorial series:** `docs-site/agent-learning-guide/` (9 comprehensive guides)
+- **Start here:** `docs-site/agent-learning-guide/00-learning-roadmap.md` (learning path overview)
+- **Code index:** See `docs-site/agent-learning-guide/README.md` for core code locations
 
 ---
 

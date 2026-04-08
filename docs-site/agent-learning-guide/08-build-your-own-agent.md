@@ -1918,7 +1918,7 @@ export OPENAI_API_KEY=your-api-key-here
 python examples/basic_usage.py
 ```
 
-详细文档请查看 [examples/simple-agent-python/README.md](../../examples/simple-agent-python/README.md)。
+详细文档请查看 [examples/simple-agent-python/README.md](https://github.com/python012/learn-agent-from-claude-code/tree/main/examples/simple-agent-python)。
 
 ---
 

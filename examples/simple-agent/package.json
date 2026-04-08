@@ -9,6 +9,7 @@
     "example:basic": "tsx examples/basic-usage.ts",
     "example:repl": "tsx examples/repl.ts",
     "example:custom-tool": "tsx examples/custom-tool.ts",
+    "example:multi-agent": "tsx examples/multi-agent.ts",
     "test": "vitest",
     "test:run": "vitest run"
   },

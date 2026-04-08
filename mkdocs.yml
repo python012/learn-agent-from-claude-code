@@ -1,0 +1,88 @@
+# MkDocs 配置 - Agent 学习指南文档站
+# 使用方法:
+#   pip install mkdocs mkdocs-material
+#   mkdocs serve        # 本地预览
+#   mkdocs build        # 构建静态站点
+#   mkdocs gh-deploy    # 部署到 GitHub Pages
+
+site_name: Agent 开发学习指南
+site_description: 通过深入分析 Claude Code 源代码学习 AI Agent 开发
+site_author: Reed Xia
+repo_url: https://github.com/python012/learn-agent-from-claude-code
+repo_name: python012/learn-agent-from-claude-code
+docs_dir: docs-site
+site_dir: site
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.extra:
+      pymdownx.emoji:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+plugins:
+  - search:
+      lang: zh
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/python012/learn-agent-from-claude-code
+    - icon: fontawesome/brands/python
+      link: https://python.org
+
+nav:
+  - 首页: README.md
+  - 学习指南:
+    - 系列总览: agent-learning-guide/README.md
+    - 00. 学习路线总览: agent-learning-guide/00-learning-roadmap.md
+    - 01. LLM 基础与 Agent 概念: agent-learning-guide/01-llm-fundamentals-and-agent-concepts.md
+    - 02. Agent 架构入门: agent-learning-guide/02-agent-architecture-introduction.md
+    - 03. 工具系统详解: agent-learning-guide/03-tool-system-explained.md
+    - 04. 会话与状态管理: agent-learning-guide/04-session-and-state-management.md
+    - 05. 权限与安全控制: agent-learning-guide/05-permission-and-security-control.md
+    - 06. MCP 与外部集成: agent-learning-guide/06-mcp-and-external-integration.md
+    - 07. 多 Agent 协作系统: agent-learning-guide/07-multi-agent-collaboration-system.md
+    - 08. 实战：构建自己的 Agent: agent-learning-guide/08-build-your-own-agent.md
+  - 示例代码:
+    - TypeScript 版本: https://github.com/python012/learn-agent-from-claude-code/tree/main/examples/simple-agent
+    - Python 版本: https://github.com/python012/learn-agent-from-claude-code/tree/main/examples/simple-agent-python

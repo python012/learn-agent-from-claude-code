@@ -11,15 +11,15 @@
 
 | 序号 | 文档 | 核心内容 |
 |------|------|----------|
-| 00 | [学习路线总览](docs/agent-learning-guide/00-learning-roadmap.md) | 系列介绍、学习路径、时间估算 |
-| 01 | [LLM 基础与 Agent 概念](docs/agent-learning-guide/01-llm-fundamentals-and-agent-concepts.md) | API 交互、消息格式、工具调用、流式响应 |
-| 02 | [Agent 架构入门](docs/agent-learning-guide/02-agent-architecture-introduction.md) | 整体架构、状态管理、命令系统、数据流 |
-| 03 | [工具系统详解](docs/agent-learning-guide/03-tool-system-explained.md) | Tool 接口、工具实现、权限控制、自定义工具 |
-| 04 | [会话与状态管理](docs/agent-learning-guide/04-session-and-state-management.md) | 会话存储、消息链、持久化、恢复机制 |
-| 05 | [权限与安全控制](docs/agent-learning-guide/05-permission-and-security-control.md) | 权限模式、规则系统、Auto Mode 分类器 |
-| 06 | [MCP 与外部集成](docs/agent-learning-guide/06-mcp-and-external-integration.md) | MCP 协议、外部工具集成、资源管理 |
-| 07 | [多 Agent 协作系统](docs/agent-learning-guide/07-multi-agent-collaboration-system) | Agent 生成、通信、协调器模式 |
-| 08 | [实战：构建自己的 Agent](docs/agent-learning-guide/08-build-your-own-agent.md) | 综合实践、从零实现完整 Agent 系统（TypeScript + Python 双版本） |
+| 00 | [学习路线总览](docs-site/agent-learning-guide/00-learning-roadmap.md) | 系列介绍、学习路径、时间估算 |
+| 01 | [LLM 基础与 Agent 概念](docs-site/agent-learning-guide/01-llm-fundamentals-and-agent-concepts.md) | API 交互、消息格式、工具调用、流式响应 |
+| 02 | [Agent 架构入门](docs-site/agent-learning-guide/02-agent-architecture-introduction.md) | 整体架构、状态管理、命令系统、数据流 |
+| 03 | [工具系统详解](docs-site/agent-learning-guide/03-tool-system-explained.md) | Tool 接口、工具实现、权限控制、自定义工具 |
+| 04 | [会话与状态管理](docs-site/agent-learning-guide/04-session-and-state-management.md) | 会话存储、消息链、持久化、恢复机制 |
+| 05 | [权限与安全控制](docs-site/agent-learning-guide/05-permission-and-security-control.md) | 权限模式、规则系统、Auto Mode 分类器 |
+| 06 | [MCP 与外部集成](docs-site/agent-learning-guide/06-mcp-and-external-integration.md) | MCP 协议、外部工具集成、资源管理 |
+| 07 | [多 Agent 协作系统](docs-site/agent-learning-guide/07-multi-agent-collaboration-system.md) | Agent 生成、通信、协调器模式 |
+| 08 | [实战：构建自己的 Agent](docs-site/agent-learning-guide/08-build-your-own-agent.md) | 综合实践、从零实现完整 Agent 系统（TypeScript + Python 双版本） |
 
 ### 快速开始
 
@@ -27,7 +27,7 @@
 2. **进阶路径**（有 LLM 经验）：第 02 → 03 → 05 → 06 → 07 → 08 篇
 3. **专题深入**：工具开发、权限系统、架构设计
 
-完整学习指南索引：[docs/agent-learning-guide/README.md](docs/agent-learning-guide/README.md)
+完整学习指南索引：[docs-site/agent-learning-guide/README.md](docs-site/agent-learning-guide/README.md)
 
 ### 核心代码索引
 
@@ -64,8 +64,8 @@
 
 本仓库以 **AI Agent 开发学习** 为核心主题，提供完整的教程系列和示例代码。
 
-- **学习指南**：位于 [`docs/agent-learning-guide/`](docs/agent-learning-guide/) 目录，是仓库的核心内容
-  - 完整索引：[docs/agent-learning-guide/README.md](docs/agent-learning-guide/README.md)
+- **学习指南**：位于 [`docs-site/agent-learning-guide/`](docs-site/agent-learning-guide/) 目录，是仓库的核心内容
+  - 完整索引：[docs-site/agent-learning-guide/README.md](docs-site/agent-learning-guide/README.md)
 - **示例代码**：位于 [`examples/`](examples/) 目录
   - `examples/simple-agent/` — TypeScript 版本 SimpleAgent 实现
   - `examples/simple-agent-python/` — Python 版本 SimpleAgent 实现

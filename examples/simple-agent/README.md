@@ -27,6 +27,9 @@ npm run example:repl
 
 # 自定义工具示例
 npm run example:custom-tool
+
+# 多 Agent 协作示例
+npm run example:multi-agent
 ```
 
 ## 项目结构
@@ -143,8 +146,8 @@ npm test
 
 ## 学习资源
 
-- [第 08 篇：实战构建自己的 Agent](../../docs/agent-learning-guide/08-build-your-own-agent.md)
-- [系列总览](../../docs/agent-learning-guide/README.md)
+- [第 08 篇：实战构建自己的 Agent](../../docs-site/agent-learning-guide/08-build-your-own-agent.md)
+- [系列总览](../../docs-site/agent-learning-guide/README.md)
 
 ## License
 

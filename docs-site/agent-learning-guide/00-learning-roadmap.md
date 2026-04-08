@@ -110,7 +110,7 @@
 
 ---
 
-### 第 7 篇：[多 Agent 协作系统](./07-multi-agent-collaboration-system)
+### 第 7 篇：[多 Agent 协作系统](./07-multi-agent-collaboration-system.md)
 
 **学习目标**：
 - 理解多 Agent 协作的架构设计
