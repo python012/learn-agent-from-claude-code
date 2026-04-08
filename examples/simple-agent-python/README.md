@@ -147,6 +147,47 @@ weather_tool = Tool(
 | `accept_edits` | 自动允许只读操作 |
 | `auto` | AI 自动分类 |
 
+## 健壮性特性
+
+SimpleAgent Python 版本包含以下健壮性改进：
+
+### 1. 配置验证
+- **API 密钥验证**：初始化时检查 API 密钥是否为空
+- **模型验证**：检查模型名称是否有效
+- **参数范围验证**：`max_tokens` 必须为正数，`max_iterations` 必须为正数
+
+### 2. 输入验证
+- **工具输入验证**：使用 Pydantic 模式验证工具输入参数
+- **友好的错误消息**：提供详细的验证错误信息，帮助调试
+
+### 3. 超时处理
+- **全局超时**：通过 `timeout_ms` 配置项设置 Agent 执行超时时间
+- **工具执行超时**：单个工具执行超过指定时间会自动取消
+- **LLM 请求超时**：OpenAI API 调用支持超时设置
+
+### 4. 错误处理
+- **详细的错误分类**：区分工具未找到、权限拒绝、输入无效、执行错误等
+- **取消支持**：支持 `asyncio.CancelledError`，可优雅取消长时间运行的任务
+- **最大迭代次数保护**：防止无限循环，默认 50 次，可配置
+
+### 5. 状态管理
+- **处理状态跟踪**：`is_processing` 状态指示 Agent 是否正在运行
+- **资源清理**：确保在异常情况下正确重置状态
+
+### 使用示例
+
+```python
+config = AgentConfig(
+    cwd=os.getcwd(),
+    api_key=api_key,
+    model="gpt-4o",
+    max_tokens=4096,
+    permission_mode="bypass_permissions",
+    max_iterations=20,      # 限制最大迭代次数
+    timeout_ms=30000,       # 30秒超时
+)
+```
+
 ## 测试
 
 ```bash

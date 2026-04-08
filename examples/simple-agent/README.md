@@ -132,6 +132,54 @@ const WeatherTool = buildTool({
 | `acceptEdits` | 自动允许只读操作 |
 | `auto` | AI 自动分类 |
 
+## 健壮性特性
+
+SimpleAgent TypeScript 版本包含以下健壮性改进：
+
+### 1. 配置验证
+- **API 密钥验证**：初始化时检查 API 密钥是否为空
+- **模型验证**：检查模型名称是否有效
+- **参数范围验证**：`maxTokens` 必须为正数，`maxIterations` 必须为正数
+
+### 2. 输入验证
+- **工具输入验证**：使用 Zod 模式验证工具输入参数（双重验证：Agent 层面和工具层面）
+- **友好的错误消息**：提供详细的验证错误信息，帮助调试
+
+### 3. 超时与取消
+- **全局超时**：通过 `timeoutMs` 配置项设置 Agent 执行超时时间
+- **AbortSignal 支持**：支持标准的 `AbortSignal` 取消长时间运行的任务
+- **工具执行超时**：单个工具执行超过指定时间会自动取消
+- **LLM 请求超时**：OpenAI API 调用支持超时和取消
+
+### 4. 错误处理
+- **详细的错误分类**：区分工具未找到、权限拒绝、输入无效、执行错误、取消等
+- **取消支持**：支持 `AbortError`，可优雅取消任务
+- **最大迭代次数保护**：防止无限循环，默认 50 次，可配置
+- **状态一致性**：确保在异常情况下正确重置处理状态
+
+### 5. 类型安全
+- **完整的 TypeScript 类型**：提供完整的类型定义和类型推断
+- **Zod 模式集成**：工具输入使用 Zod 进行运行时类型验证
+
+### 使用示例
+
+```typescript
+const controller = new AbortController()
+
+const agent = new Agent({
+  cwd: process.cwd(),
+  apiKey: process.env.OPENAI_API_KEY!,
+  model: 'gpt-4o',
+  maxTokens: 4096,
+  permissionMode: 'bypassPermissions',
+  maxIterations: 20,      // 限制最大迭代次数
+  timeoutMs: 30000,       // 30秒超时
+  signal: controller.signal, // 可选的 AbortSignal
+})
+
+// 可以通过 controller.abort() 取消任务
+```
+
 ## 构建
 
 ```bash

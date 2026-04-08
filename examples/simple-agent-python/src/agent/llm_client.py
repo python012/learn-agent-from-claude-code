@@ -53,6 +53,7 @@ class LLMClient:
         max_tokens: int = 4096,
         temperature: float = 0.7,
         base_url: str | None = None,
+        timeout_ms: int | None = None,
     ) -> None:
         """初始化 LLM 客户端
 
@@ -62,15 +63,27 @@ class LLMClient:
             max_tokens: 最大输出 token 数
             temperature: 温度参数
             base_url: API 基础 URL（可选，用于自定义端点）
+            timeout_ms: 超时时间（毫秒）
         """
+        # 验证配置
+        if not api_key:
+            raise ValueError("API key is required")
+        if not model:
+            raise ValueError("Model is required")
+        if max_tokens <= 0:
+            raise ValueError("max_tokens must be positive")
+
         self.model = model
         self.max_tokens = max_tokens
         self.temperature = temperature
+        self.timeout_ms = timeout_ms
 
         # 初始化 OpenAI 客户端
         client_kwargs: dict[str, Any] = {"api_key": api_key}
         if base_url:
             client_kwargs["base_url"] = base_url
+        if timeout_ms:
+            client_kwargs["timeout"] = timeout_ms / 1000.0  # 转换为秒
         self.client = AsyncOpenAI(**client_kwargs)
 
     async def chat(

@@ -2,12 +2,17 @@ import { Agent } from '../src/agent/Agent.js'
 import { builtInTools } from '../src/tools/index.js'
 
 async function main() {
+  const controller = new AbortController()
+
   const agent = new Agent({
     cwd: process.cwd(),
     apiKey: process.env.OPENAI_API_KEY!,
     model: 'gpt-4o',
     maxTokens: 4096,
     permissionMode: 'bypassPermissions',
+    maxIterations: 20,            // 设置最大迭代次数
+    timeoutMs: 30000,             // 设置超时时间（30秒）
+    signal: controller.signal,    // 可选的 AbortSignal
   })
 
   agent.registerTools(builtInTools)

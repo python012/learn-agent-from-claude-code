@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 import time
 from dataclasses import dataclass
@@ -42,6 +43,8 @@ class AgentConfig:
     permission_mode: PermissionMode = "default" # 权限模式
     session_dir: str | None = None              # 会话存储目录
     max_iterations: int = 50                    # 最大迭代次数
+    timeout_ms: int | None = None               # 超时时间（毫秒）
+    # signal 可以通过 asyncio 任务取消实现
 
 
 @dataclass
@@ -71,8 +74,19 @@ class Agent:
         Args:
             config: Agent 配置
         """
+        # 验证配置
+        if not config.api_key:
+            raise ValueError("API key is required")
+        if not config.model:
+            raise ValueError("Model is required")
+        if config.max_tokens <= 0:
+            raise ValueError("max_tokens must be positive")
+        if config.max_iterations <= 0:
+            raise ValueError("max_iterations must be positive")
+
         self.cwd = config.cwd
         self.max_iterations = config.max_iterations
+        self.timeout_ms = config.timeout_ms
 
         # 初始化 LLM 客户端
         self.llm_client = LLMClient(
@@ -80,6 +94,7 @@ class Agent:
             model=config.model,
             max_tokens=config.max_tokens,
             temperature=config.temperature,
+            timeout_ms=config.timeout_ms,
         )
 
         # 初始化权限检查器
@@ -226,10 +241,16 @@ class Agent:
             while iteration < self.max_iterations:
                 iteration += 1
 
+                # 检查是否已取消
+                try:
+                    asyncio.current_task().cancelled()  # 触发 CancelledError 如果已取消
+                except asyncio.CancelledError:
+                    raise
+
                 # 获取当前消息
                 messages = self.state.get_state().messages
 
-                # 调用 LLM
+                # 调用 LLM（带超时检查）
                 response = await self.llm_client.chat(messages, tool_list)
 
                 # 更新 token 使用统计
@@ -253,6 +274,12 @@ class Agent:
                     self._add_assistant_message(None, response.tool_calls)
 
                     for tool_call in response.tool_calls:
+                        # 检查是否已取消
+                        try:
+                            asyncio.current_task().cancelled()
+                        except asyncio.CancelledError:
+                            raise
+
                         result = await self._execute_tool_call(tool_call)
                         self._add_tool_result_message(
                             tool_call.id,
@@ -266,6 +293,10 @@ class Agent:
                 # 没有工具调用，结束循环
                 break
 
+            # 检查是否达到最大迭代次数
+            if iteration >= self.max_iterations:
+                raise RuntimeError(f"Max iterations ({self.max_iterations}) reached")
+
             # 保存会话
             await self._save_session()
 
@@ -275,6 +306,9 @@ class Agent:
                 token_usage=final_state.token_usage,
             )
 
+        except asyncio.CancelledError:
+            # 任务被取消，转换为更友好的错误消息
+            raise RuntimeError("Agent execution cancelled")
         finally:
             # 重置处理状态
             self.state.set_state(lambda s: AppState(
@@ -330,20 +364,34 @@ class Agent:
             parsed_input = tool.input_schema(**tool_call.input)
         except Exception as e:
             return {
-                "content": f"Invalid input: {str(e)}",
+                "content": f"Invalid input for tool {tool.name}: {str(e)}",
                 "is_error": True,
             }
 
-        # 执行工具
+        # 执行工具（带超时）
         try:
-            result = await tool.call(parsed_input, context)
+            coro = tool.call(parsed_input, context)
+            if self.timeout_ms:
+                result = await asyncio.wait_for(coro, timeout=self.timeout_ms / 1000.0)
+            else:
+                result = await coro
             return {
                 "content": result.content,
                 "is_error": result.is_error,
             }
+        except asyncio.TimeoutError:
+            return {
+                "content": f"Tool execution timeout after {self.timeout_ms}ms",
+                "is_error": True,
+            }
+        except asyncio.CancelledError:
+            return {
+                "content": "Tool execution cancelled",
+                "is_error": True,
+            }
         except Exception as e:
             return {
-                "content": f"Tool execution error: {str(e)}",
+                "content": f"Tool execution error for {tool.name}: {str(e)}",
                 "is_error": True,
             }
 

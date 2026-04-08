@@ -15,6 +15,9 @@ export type AgentConfig = {
   temperature?: number
   permissionMode?: PermissionMode
   sessionDir?: string
+  maxIterations?: number
+  timeoutMs?: number
+  signal?: AbortSignal
 }
 
 export type AgentResult = {
@@ -32,15 +35,31 @@ export class Agent {
   private sessionStorage: SessionStorage | null
   private cwd: string
   private registeredTools: Map<string, Tool> = new Map()
-  private maxIterations = 50
+  private maxIterations: number
+  private timeoutMs: number | undefined
+  private signal: AbortSignal | undefined
 
   constructor(config: AgentConfig) {
     this.cwd = config.cwd
+    this.maxIterations = config.maxIterations ?? 50
+    this.timeoutMs = config.timeoutMs
+    this.signal = config.signal
+
+    // 验证必要的配置
+    if (!config.apiKey) {
+      throw new Error('API key is required')
+    }
+    if (!config.model) {
+      throw new Error('Model is required')
+    }
+
     this.llmClient = new LLMClient({
       apiKey: config.apiKey,
       model: config.model,
       maxTokens: config.maxTokens,
       temperature: config.temperature,
+      signal: config.signal,
+      timeoutMs: config.timeoutMs,
     })
     this.permissionChecker = new PermissionChecker({
       mode: config.permissionMode ?? 'default',
@@ -130,6 +149,11 @@ export class Agent {
   }
 
   async run(): Promise<AgentResult> {
+    // 检查是否已取消
+    if (this.signal?.aborted) {
+      throw new Error('Agent execution cancelled before start')
+    }
+
     this.state.setState(prev => ({ ...prev, isProcessing: true }))
 
     try {
@@ -138,6 +162,11 @@ export class Agent {
 
       while (iteration < this.maxIterations) {
         iteration++
+
+        // 检查是否已取消
+        if (this.signal?.aborted) {
+          throw new Error('Agent execution cancelled')
+        }
 
         const messages = this.state.getState().messages
         const response = await this.llmClient.chat(messages, toolList)
@@ -158,6 +187,11 @@ export class Agent {
           this.addAssistantMessage('', response.toolCalls)
 
           for (const toolCall of response.toolCalls) {
+            // 检查是否已取消
+            if (this.signal?.aborted) {
+              throw new Error('Agent execution cancelled during tool execution')
+            }
+
             const result = await this.executeToolCall(toolCall)
             this.addToolResultMessage(toolCall.id, result.content, result.isError)
           }
@@ -168,6 +202,11 @@ export class Agent {
         break
       }
 
+      // 检查是否达到最大迭代次数
+      if (iteration >= this.maxIterations) {
+        throw new Error(`Max iterations (${this.maxIterations}) reached`)
+      }
+
       await this.saveSession()
 
       const finalState = this.state.getState()
@@ -175,6 +214,12 @@ export class Agent {
         messages: finalState.messages,
         tokenUsage: finalState.tokenUsage,
       }
+    } catch (error) {
+      // 将错误转换为更友好的消息
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw new Error('Agent execution cancelled')
+      }
+      throw error
     } finally {
       this.state.setState(prev => ({ ...prev, isProcessing: false }))
     }
@@ -192,8 +237,10 @@ export class Agent {
     const toolContext: ToolContext = {
       cwd: this.cwd,
       sessionId: this.state.getState().sessionId,
+      signal: this.signal,
     }
 
+    // 权限检查
     const permissionCheck = await this.permissionChecker.checkPermission(
       tool,
       toolCall.input,
@@ -207,16 +254,44 @@ export class Agent {
       }
     }
 
+    // 输入验证
+    let parsedInput: unknown
     try {
-      const result = await tool.call(toolCall.input, toolContext)
+      parsedInput = tool.inputSchema.parse(toolCall.input)
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error)
+      return {
+        content: `Invalid input for tool ${tool.name}: ${errorMessage}`,
+        isError: true,
+      }
+    }
+
+    // 执行工具（带超时）
+    try {
+      let resultPromise = tool.call(parsedInput, toolContext)
+
+      if (this.timeoutMs) {
+        const timeoutPromise = new Promise<never>((_, reject) => {
+          setTimeout(() => reject(new Error(`Tool execution timeout after ${this.timeoutMs}ms`)), this.timeoutMs)
+        })
+        resultPromise = Promise.race([resultPromise, timeoutPromise])
+      }
+
+      const result = await resultPromise
       return {
         content: result.content,
         isError: result.isError ?? false,
       }
     } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        return {
+          content: 'Tool execution cancelled',
+          isError: true,
+        }
+      }
       const errorMessage = error instanceof Error ? error.message : String(error)
       return {
-        content: `Tool execution error: ${errorMessage}`,
+        content: `Tool execution error for ${tool.name}: ${errorMessage}`,
         isError: true,
       }
     }

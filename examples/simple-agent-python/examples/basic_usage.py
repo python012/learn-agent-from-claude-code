@@ -29,6 +29,8 @@ async def main() -> None:
         model="gpt-4o",
         max_tokens=4096,
         permission_mode="bypass_permissions",  # 跳过权限检查
+        max_iterations=20,                     # 设置最大迭代次数
+        timeout_ms=30000,                      # 设置超时时间（30秒）
     )
 
     # 创建 Agent 实例
