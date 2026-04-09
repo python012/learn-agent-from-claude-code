@@ -43,7 +43,11 @@ theme:
 markdown_extensions:
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -69,6 +73,10 @@ extra:
       link: https://github.com/python012/learn-agent-from-claude-code
     - icon: fontawesome/brands/python
       link: https://python.org
+
+extra_javascript:
+  - https://unpkg.com/mermaid@11.3.0/dist/mermaid.min.js
+  - javascripts/mermaid-init.js
 
 nav:
   - 首页: README.md

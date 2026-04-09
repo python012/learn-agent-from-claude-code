@@ -32,8 +32,8 @@ This is a **recovered source tree** of Anthropic's Claude Code CLI (reconstructe
 - **Single test execution:** Not available without original toolchain
 
 ### Documentation
-- **Live site:** https://mehmoodosman.github.io/claude-code-source-code/
-- **Local preview:** `cd docs-site && python3 -m venv .venv && pip install -r requirements.txt && mkdocs serve`
+- **Live site:** https://python012.github.io/learn-agent-from-claude-code/
+- **Local preview:** `pip install mkdocs mkdocs-material && mkdocs serve`
 
 ---
 

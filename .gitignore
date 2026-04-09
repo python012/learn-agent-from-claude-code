@@ -1,5 +1,4 @@
 .claude/
-.claude/*
 
 # 环境变量
 .env
@@ -26,6 +25,7 @@ dist/
 build/
 
 # 构建输出
+site/
 *.log
 npm-debug.log*
 yarn-debug.log*

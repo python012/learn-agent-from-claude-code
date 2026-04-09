@@ -111,7 +111,7 @@ Model handling in `src/utils/model/`:
 ## Documentation
 
 Full documentation site in `docs-site/` (MkDocs Material):
-- Live: https://mehmoodosman.github.io/claude-code-source-code/
-- Local: `cd docs-site && python3 -m venv .venv && pip install -r requirements.txt && mkdocs serve`
+- Live: https://python012.github.io/learn-agent-from-claude-code/
+- Local: `pip install mkdocs mkdocs-material && mkdocs serve`
 
 See `README.md` for full architectural overview and directory structure.
