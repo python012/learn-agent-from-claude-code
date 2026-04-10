@@ -8,6 +8,7 @@
 site_name: Agent 开发学习指南
 site_description: 通过深入分析 Claude Code 源代码学习 AI Agent 开发
 site_author: Reed Xia
+site_url: https://python012.github.io/learn-agent-from-claude-code/
 repo_url: https://github.com/python012/learn-agent-from-claude-code
 repo_name: python012/learn-agent-from-claude-code
 docs_dir: docs-site
