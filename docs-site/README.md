@@ -2,12 +2,13 @@
 
 [![GitHub Stars](https://img.shields.io/github/stars/python012/learn-agent-from-claude-code?style=flat-square&logo=github)](https://github.com/python012/learn-agent-from-claude-code/stargazers)
 [![License](https://img.shields.io/github/license/python012/learn-agent-from-claude-code?style=flat-square&label=license)](https://github.com/python012/learn-agent-from-claude-code/blob/main/LICENSE)
+![Visitors](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fpython012.github.io%2Flearn-agent-from-claude-code%2F&count_bg=%236C63AC&title_bg=%23555555&title=visitors&edge_flat=true)
 
 > 通过深入分析 Claude Code 源代码，系统学习 AI Agent 开发
 
 ---
 
-## 📚 系列概述
+## 系列概述
 
 本系列文档通过深入分析 Claude Code 源代码，引导有 Python 和 TypeScript 经验的工程师系统学习 AI Agent 开发。
 
@@ -27,7 +28,7 @@
 
 ---
 
-## 🚀 快速开始
+## 快速开始
 
 ### 学习路径建议
 
@@ -49,7 +50,7 @@
 
 ---
 
-## 📖 核心概念速查
+## 核心概念速查
 
 ### Agent = LLM + Tools + State + Permissions
 
@@ -70,7 +71,7 @@
 
 ---
 
-## 🛠️ 本地开发
+## 本地开发
 
 ### 预览文档站点
 
@@ -92,7 +93,7 @@ mkdocs build
 
 ---
 
-## 📦 部署到 GitHub Pages
+## 部署到 GitHub Pages
 
 ### 自动部署（推荐）
 
@@ -106,7 +107,7 @@ mkdocs gh-deploy
 
 ---
 
-## 🔗 相关链接
+## 相关链接
 
 - [GitHub 仓库](https://github.com/python012/learn-agent-from-claude-code)
 - [Issue 反馈](https://github.com/python012/learn-agent-from-claude-code/issues)
@@ -114,6 +115,6 @@ mkdocs gh-deploy
 
 ---
 
-## 📄 License
+## License
 
 MIT License
